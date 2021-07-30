@@ -4,54 +4,35 @@ const Bodies = Matter.Bodies;
 const Constraint = Matter.Constraint;
 
 var engine, world;
-var polygon, polygonImg;
-var stand;
-var slingShot;
-
-function preload() {
-    polygonImg = loadImage("polygon.png");
-}
+var particle = [];
+var plinko = [];
+var division = [];
+var divisionHeight=300;
 
 function setup(){
-    var canvas = createCanvas(1200,400);
+    var canvas = createCanvas(400,800);
     engine = Engine.create();
     world = engine.world;
 
 
-    ground = new Ground(1200,height,1200,20);
-    stand = new Ground(390,235,200,20);
-
-    box1 = new Box(330,235,30,40);
-    box2 = new Box(360,235,30,40);
-    box3 = new Box(390,235,30,40);
-    box4 = new Box(420,235,30,40);
-    box5 = new Box(450,235,30,40);
-    box6 = new Box(360,195,30,40);
-    box7 = new Box(390,195,30,40);
-    box8 = new Box(420,195,30,40);
-    box9 = new Box(390,195,30,40);
-
-    polygon= Bodies.circle(50,200,20);
-    World.add(world,polygon);
-
-    slingShot= new SlingShot(this.polygon,{x:100,y:200});
-    imageMode(CENTER)
-    image(polygonImg,polygon.position.x,polygon.position.y,40,40);
- 
+    ground = new Ground(400,height,200,20);
+    for (var k=0; k <=width; k = k + 80) {
+        division.push(new Division(k, height-divisionHeight/2, 10, divisionHeight));
+        
+    }
+    for (var j=40; j<=width; j=j+50)
+    {
+        plinko.push(new Plinko(j,75));
+    }
+    for (var j=15; j <=width-10; j=j+50)
+    {
+        plinko.push(new Plinko(j,175));
+    }
 }
-
-
-
 
 function draw(){
+
     Engine.update(engine);
-}
-    
-function mouseDragged(){
-    Matter.Body.setPosition(this.polygon, {x: mouseX , y: mouseY});
-}
+ 
 
-
-function mouseReleased(){
-    slingshot.fly();
 }
